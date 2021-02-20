@@ -1,0 +1,4 @@
+[pwd, ls]
+[echo 'hello']
+[sleep 3,echo 'aaa']
+[sleep 2,echo 'bbb']
