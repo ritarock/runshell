@@ -1,24 +1,21 @@
 package file
 
 import (
-	"bufio"
+	"io/ioutil"
 	"log"
 	"os"
 )
 
-func ReadLines(path string) []string {
-	var result []string
+func Read(path string) string {
 	f, err := os.Open(path)
 	if err != nil {
 		log.Fatal(err)
 	}
-	s := bufio.NewScanner(f)
+	defer f.Close()
 
-	for s.Scan() {
-		result = append(result, s.Text())
+	b, err := ioutil.ReadAll(f)
+	if err != nil {
+		log.Fatal(err)
 	}
-	if s.Err() != nil {
-		log.Fatal(s.Err())
-	}
-	return result
+	return string(b)
 }

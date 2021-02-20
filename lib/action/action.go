@@ -1,6 +1,7 @@
 package action
 
 import (
+	"fmt"
 	"runshell/lib/command"
 	"runshell/lib/file"
 	rs "runshell/lib/string"
@@ -8,10 +9,13 @@ import (
 )
 
 func Run(path string) {
-	for _, commandStrList := range file.ReadLines(path) {
-		for _, commandStr := range rs.CreateCmd(commandStrList) {
+	readCommandsList := strings.Split(file.Read(path), "\n")
+
+	for _, commmandList := range readCommandsList {
+		for _, commandStr := range rs.CreateCmd(commmandList) {
 			for _, v := range commandStr {
-				command.Run(strings.Split(v, ","))
+				fmt.Println(v)
+				go command.Run(strings.Split(v, ","))
 			}
 		}
 	}
