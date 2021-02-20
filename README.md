@@ -23,3 +23,21 @@ GLOBAL OPTIONS:
    --file value, -f value  set file
    --help, -h              show help (default: false)
 ```
+
+## Example
+`test_data/test.txt` looks like this.
+```test.txt
+[sleep 2, echo 'sleep 2']
+[sleep 3, echo 'sleep 3']
+[echo 'hello']
+
+```
+
+In this case, Runs in parallel, row by row.
+
+```
+$ runshell -f ./test_data/test.txt
+hello
+sleep 2
+sleep 3
+```

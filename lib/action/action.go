@@ -5,16 +5,28 @@ import (
 	"runshell/lib/file"
 	rs "runshell/lib/string"
 	"strings"
+	"sync"
 )
 
-func Run(path string) {
-	readCommandsList := strings.Split(file.Read(path), "\n")
-
-	for _, commmandList := range readCommandsList {
-		for _, commandStr := range rs.CreateCmd(commmandList) {
-			for _, v := range commandStr {
-				command.Run(strings.Split(v, ","))
-			}
+func Async(commandList string, isFin chan bool, wg *sync.WaitGroup) {
+	defer wg.Done()
+	for _, commandStr := range rs.CreateCmd(commandList) {
+		for _, v := range commandStr {
+			command.Run(strings.Split(v, ","))
 		}
 	}
+	isFin <- true
+}
+
+func Run(path string) {
+	wg := new(sync.WaitGroup)
+	readCommandsList := strings.Split(file.Read(path), "\n")
+	isFin := make(chan bool, len(readCommandsList))
+
+	for _, commandlist := range readCommandsList {
+		wg.Add(1)
+		go Async(commandlist, isFin, wg)
+	}
+	wg.Wait()
+	close(isFin)
 }
