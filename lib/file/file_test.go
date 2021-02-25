@@ -16,7 +16,7 @@ func TestRead(t *testing.T) {
 		{
 			name: "read line",
 			args: args{path: "../../test_data/test.txt"},
-			want: "[sleep 2, echo 'sleep 2']\n[sleep 3, echo 'sleep 3']\n[echo 'hello']\n",
+			want: "[sleep 1, sleep 1, echo 'sleep 2']\n[sleep 1, sleep 1, sleep 1, echo 'sleep 3']\n[echo 'hello']\n",
 		},
 	}
 	for _, tt := range tests {

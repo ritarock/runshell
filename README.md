@@ -27,13 +27,19 @@ GLOBAL OPTIONS:
 ## Example
 `test_data/test.txt` looks like this.
 ```test.txt
-[sleep 2, echo 'sleep 2']
-[sleep 3, echo 'sleep 3']
+[sleep 1, sleep 1, echo 'sleep 2']
+[sleep 1, sleep 1, sleep 1, echo 'sleep 3']
 [echo 'hello']
 
 ```
 
 In this case, Runs in parallel, row by row.
+```
+         -> sleep 1    -> sleep 1 -> echo 'sleep 2' -> DONE
+runshell -> sleep 1    -> sleep 1 -> sleep 1        -> echo 'sleep 3' -> DONE
+         -> echo hello -> DONE
+```
+
 
 ```
 $ runshell -f ./test_data/test.txt
