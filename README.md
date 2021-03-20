@@ -1,6 +1,5 @@
 # runsehll
 
-# findinstance
 ## install
 ```
 $ git clone https://github.com/ritarock/runshell.git
