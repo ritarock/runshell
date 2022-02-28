@@ -3,17 +3,20 @@ package main
 import (
 	"log"
 	"os"
-	"runshell/lib/action"
+	"ritarock/runshell/internal/action"
 
 	"github.com/urfave/cli/v2"
 )
+
+const VERSION = "1.0"
 
 func main() {
 	var file string = ""
 
 	app := cli.App{
-		Name:  "runshell",
-		Usage: "Run commands",
+		Name:    "runshell",
+		Usage:   "Run commands",
+		Version: VERSION,
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:        "file",
@@ -24,7 +27,9 @@ func main() {
 			},
 		},
 		Action: func(c *cli.Context) error {
-			action.Run(file)
+			if err := action.Run(file); err != nil {
+				return err
+			}
 			return nil
 		},
 	}
